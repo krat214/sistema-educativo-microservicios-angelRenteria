@@ -26,5 +26,10 @@ public class UsuarioService {
     public Usuario guardar(Usuario u) {
         return repo.save(u);
     }
+
+    public Usuario obtenerPorId(Long id) {
+        return repository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado con id: " + id));
+    }
+
 }
 
