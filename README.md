@@ -19,10 +19,10 @@ Contiene los servicios de usuarios, asignaturas y matrículas, comunicados entre
 
 ### 🗂️ Config Server
 
-- Todos los servicios están configurados para cargar sus propiedades desde un **repositorio remoto en GitHub**.
+- Todos los servicios están configurados para cargar sus propiedades desde un **repositorio remoto en GitHub https://github.com/krat214/config-repo**.
 - Las propiedades están organizadas por nombre del microservicio:  
   Ejemplo:  
-  `usuarios-servicio.properties`, `asignaturas-servicio.properties`, etc.
+  `usuarios-servicio.properties`, `asignaturas-servicio.properties`, `matriculas-servicio.properties`.
 
 ### ☁️ Eureka Server
 
