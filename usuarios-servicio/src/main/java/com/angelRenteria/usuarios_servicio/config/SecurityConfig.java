@@ -29,7 +29,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/auth/**", "/actuator/**").permitAll() // ⬅️ Aquí el cambio
+                        .requestMatchers("/auth/**", "/actuator/**", "/usuarios", "/usuarios/**").permitAll() // Permitir acceso a endpoints de usuarios sin autenticación
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(new OncePerRequestFilter() {

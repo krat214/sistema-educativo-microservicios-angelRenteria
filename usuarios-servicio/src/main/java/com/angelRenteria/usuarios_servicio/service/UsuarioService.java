@@ -28,7 +28,7 @@ public class UsuarioService {
     }
 
     public Usuario obtenerPorId(Long id) {
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado con id: " + id));
+        return repo.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado con id: " + id));
     }
 
 }

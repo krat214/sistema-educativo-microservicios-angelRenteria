@@ -12,8 +12,8 @@ public class FeignClientConfig {
         return new RequestInterceptor() {
             @Override
             public void apply(RequestTemplate template) {
-                // Token estático por ahora — reemplaza con uno válido de tu /auth/login
-                String token = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmdlbEBtYWlsLmNvbSIsInJvbCI6IlJPTEVfVVNFUiIsImlhdCI6MTc0NDY4ODg1OCwiZXhwIjoxNzQ0NjkyNDU4fQ.iANwgyC2e59_dyCPxhtn8xQpk_8jTpTHxq6TrF430lQ";
+                // Token actualizado
+                String token = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmdlbEBtYWlsLmNvbSIsInJvbCI6IlJPTEVfVVNFUiIsImlhdCI6MTc0NTAzNDI3MiwiZXhwIjoxNzQ1MDM3ODcyfQ.JcT3Ut0iBOckpPb9-TVuqJG5KPOVBK8XymoZ0K_9T78";
                 template.header("Authorization", token);
             }
         };
