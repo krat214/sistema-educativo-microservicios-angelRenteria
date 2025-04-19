@@ -7,14 +7,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FeignClientConfig {
 
+    // Token fijo actualizado (vigente)
+    private static final String FIXED_TOKEN = "Bearer eyJzdWIiOiJhbmdlbEBtYWlsLmNvbSIsInJvbCI6IlJPTEVfVVNFUiIsImlhdCI6MTc0NTA4NTM3OSwiZXhwIjoxNzQ1MDg4OTc5fQ.KWTQXAS1erhW62SOu8UYWNZHXvdoQXNYFjs2a2EjN6A";
+
     @Bean
     public RequestInterceptor requestInterceptor() {
         return new RequestInterceptor() {
             @Override
             public void apply(RequestTemplate template) {
-                // Token actualizado
-                String token = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhbmdlbEBtYWlsLmNvbSIsInJvbCI6IlJPTEVfVVNFUiIsImlhdCI6MTc0NTAzNDI3MiwiZXhwIjoxNzQ1MDM3ODcyfQ.JcT3Ut0iBOckpPb9-TVuqJG5KPOVBK8XymoZ0K_9T78";
-                template.header("Authorization", token);
+                // Aplicar el token fijo a todas las peticiones
+                template.header("Authorization", FIXED_TOKEN);
             }
         };
     }
