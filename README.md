@@ -3,6 +3,46 @@
 Proyecto desarrollado para el parcial 2 de Microservicios.  
 Contiene los servicios de usuarios, asignaturas y matrículas, comunicados entre sí mediante Eureka, Config Server y Feign Client.
 
+## 👤 Datos del Estudiante
+
+- **Nombre:** Angel Renteria
+- **Asignatura:** LENGUAJE DE PROGRAMACIÓN AVANZADO 2
+- **Profesor:** Martha Nicolasa Amaya Becerra
+
+## 🏗️ Estructura del Repositorio
+
+```
+sistema-educativo-microservicios-angelRenteria/
+├── config-server/                # Servidor de configuración centralizada
+├── eureka-server/                # Servidor de descubrimiento de servicios
+├── usuarios-servicio/            # Gestión de usuarios y autenticación
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/...          # Código fuente
+│   │   │   └── resources/        # Configuraciones
+│   │   └── test/                 # Pruebas unitarias
+│   ├── build.gradle              # Dependencias
+│   └── Dockerfile                # Configuración para Docker
+├── asignaturas-servicio/         # Gestión de asignaturas
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/...          # Código fuente
+│   │   │   └── resources/        # Configuraciones
+│   │   └── test/                 # Pruebas unitarias
+│   ├── build.gradle              # Dependencias
+│   └── Dockerfile                # Configuración para Docker
+├── matriculas-servicio/          # Gestión de matrículas
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/...          # Código fuente
+│   │   │   └── resources/        # Configuraciones
+│   │   └── test/                 # Pruebas unitarias
+│   ├── build.gradle              # Dependencias
+│   └── Dockerfile                # Configuración para Docker
+├── docker-compose.yml            # Orquestación de contenedores
+└── README.md                     # Este archivo
+```
+
 ---
 
 ## 🧱 Microservicios
@@ -50,7 +90,8 @@ public interface UsuarioClient {
 
 - `usuarios-servicio` implementa autenticación con **JWT (JSON Web Token)**.
 - Se generan tokens de acceso tras el login.
-- Otros servicios pueden validar tokens para proteger rutas privadas (en progreso).
+- Otros servicios pueden validar tokens para proteger rutas privadas.
+- Los tokens son enviados mediante Feign Client en cada solicitud para mantener la autenticación entre microservicios.
 
 ---
 
@@ -65,6 +106,53 @@ public interface UsuarioClient {
 
 - Cada microservicio trabaja con **H2 en memoria** para pruebas locales.
 - No se persiste información entre reinicios.
+
+---
+
+## 🏛️ Arquitectura del Sistema
+
+```
+┌────────────────┐      ┌────────────────┐
+│                │      │                │
+│  Config Server │◄─────┤  GitHub Repo   │
+│    (8888)      │      │                │
+│                │      └────────────────┘
+└───────┬────────┘
+        │
+        │
+┌───────▼────────┐
+│                │
+│  Eureka Server │
+│    (8761)      │
+│                │
+└───────┬────────┘
+        │
+        ├─────────────┬─────────────┐
+        │             │             │
+┌───────▼──────┐ ┌────▼─────────┐ ┌─▼─────────────┐
+│              │ │              │ │               │
+│  Usuarios    │ │ Asignaturas  │ │  Matrículas   │
+│  Servicio    │ │ Servicio     │ │  Servicio     │
+│   (8081)     │ │  (8082)      │ │   (8083)      │
+│              │ │              │ │               │
+└──────────────┘ └──────────────┘ └───────────────┘
+```
+
+---
+
+## 📸 Capturas de Pantalla y Evidencias
+
+### Eureka Server
+[Pendiente de agregar una captura mostrando los servicios registrados]
+
+### JWT Authentication
+[Pendiente de agregar capturas del proceso de autenticación]
+
+### Comunicación entre Microservicios
+[Pendiente de agregar capturas que muestren la comunicación exitosa entre servicios]
+
+### Monitoreo con Actuator
+[Pendiente de agregar capturas de los endpoints de Actuator]
 
 ---
 
@@ -83,3 +171,17 @@ public interface UsuarioClient {
 
 4. Accede a Eureka en:  
    `http://localhost:8761`
+
+### 🐳 Uso con Docker
+
+1. Construir las imágenes:
+```bash
+docker-compose build
+```
+
+2. Levantar todos los servicios:
+```bash
+docker-compose up
+```
+
+---
