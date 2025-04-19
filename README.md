@@ -138,24 +138,6 @@ public interface UsuarioClient {
 └──────────────┘ └──────────────┘ └───────────────┘
 ```
 
----
-
-## 📸 Capturas de Pantalla y Evidencias
-
-### Eureka Server
-[Pendiente de agregar una captura mostrando los servicios registrados]
-
-### JWT Authentication
-[Pendiente de agregar capturas del proceso de autenticación]
-
-### Comunicación entre Microservicios
-[Pendiente de agregar capturas que muestren la comunicación exitosa entre servicios]
-
-### Monitoreo con Actuator
-[Pendiente de agregar capturas de los endpoints de Actuator]
-
----
-
 ## ▶️ Cómo ejecutar
 
 1. Clonar el repositorio:  
