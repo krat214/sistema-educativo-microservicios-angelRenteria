@@ -1,0 +1,116 @@
+name: Sistema Educativo Microservicios CI/CD
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        
+    - name: Build and Test Config Server
+      run: |
+        cd config-server
+        chmod +x ./gradlew
+        ./gradlew build
+        
+    - name: Build and Test Eureka Server
+      run: |
+        cd eureka-server
+        chmod +x ./gradlew
+        ./gradlew build
+        
+    - name: Build and Test Usuarios Service
+      run: |
+        cd usuarios-servicio
+        chmod +x ./gradlew
+        ./gradlew build
+        
+    - name: Build and Test Asignaturas Service
+      run: |
+        cd asignaturas-servicio
+        chmod +x ./gradlew
+        ./gradlew build
+        
+    - name: Build and Test Matriculas Service
+      run: |
+        cd matriculas-servicio
+        chmod +x ./gradlew
+        ./gradlew build
+        
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: |
+          **/build/reports/tests/
+          
+  docker-build:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+      
+    - name: Build Docker images
+      run: |
+        docker-compose build
+        
+    - name: Save Docker images as artifacts
+      run: |
+        mkdir -p docker-images
+        docker save sistema-educativo-microservicios-angelrenteria-config-server > docker-images/config-server.tar
+        docker save sistema-educativo-microservicios-angelrenteria-eureka-server > docker-images/eureka-server.tar
+        docker save sistema-educativo-microservicios-angelrenteria-usuarios-servicio > docker-images/usuarios-servicio.tar
+        docker save sistema-educativo-microservicios-angelrenteria-asignaturas-servicio > docker-images/asignaturas-servicio.tar
+        docker save sistema-educativo-microservicios-angelrenteria-matriculas-servicio > docker-images/matriculas-servicio.tar
+      
+    - name: Upload Docker images as artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: docker-images
+        path: docker-images/
+
+  security-scan:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        
+    - name: OWASP Dependency Check
+      uses: dependency-check/Dependency-Check_Action@main
+      with:
+        project: 'Sistema-Educativo-Microservicios'
+        path: '.'
+        format: 'HTML'
+        
+    - name: Upload Security Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-report
+        path: reports 

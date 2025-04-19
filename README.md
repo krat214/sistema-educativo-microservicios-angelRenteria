@@ -1,5 +1,7 @@
 # 📚 Sistema Educativo - Microservicios
 
+![CI/CD Pipeline](https://github.com/angelRenteria/sistema-educativo-microservicios-angelRenteria/actions/workflows/ci-cd.yml/badge.svg)
+
 Proyecto desarrollado para el parcial 2 de Microservicios.  
 Contiene los servicios de usuarios, asignaturas y matrículas, comunicados entre sí mediante Eureka, Config Server y Feign Client.
 
