@@ -138,12 +138,16 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         
-    - name: OWASP Dependency Check
-      uses: dependency-check/Dependency-Check_Action@main
-      with:
-        project: 'Sistema-Educativo-Microservicios'
-        path: '.'
-        format: 'HTML'
+    - name: Run Dependency Check
+      run: |
+        mkdir -p reports
+        # Descargar e instalar OWASP Dependency Check
+        wget https://github.com/jeremylong/DependencyCheck/releases/download/v9.0.10/dependency-check-9.0.10-release.zip
+        unzip dependency-check-9.0.10-release.zip
+        chmod +x dependency-check/bin/dependency-check.sh
+        
+        # Ejecutar el análisis
+        ./dependency-check/bin/dependency-check.sh --project "Sistema-Educativo-Microservicios" --scan . --format HTML --out ./reports
         
     - name: Upload Security Report
       uses: actions/upload-artifact@v4
