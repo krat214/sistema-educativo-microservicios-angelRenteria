@@ -57,6 +57,13 @@ jobs:
         name: test-results
         path: |
           **/build/reports/tests/
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: service-jars
+        path: |
+          **/build/libs/*.jar
           
   docker-build:
     needs: build-and-test
@@ -65,6 +72,30 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: service-jars
+        
+    - name: Prepare JAR files for Docker build
+      run: |
+        # Crear las carpetas build/libs en cada proyecto
+        mkdir -p config-server/build/libs
+        mkdir -p eureka-server/build/libs
+        mkdir -p usuarios-servicio/build/libs
+        mkdir -p asignaturas-servicio/build/libs
+        mkdir -p matriculas-servicio/build/libs
+        
+        # Mover los archivos JAR a sus ubicaciones correspondientes
+        mv config-server/build/libs/*.jar config-server/build/libs/ || true
+        mv eureka-server/build/libs/*.jar eureka-server/build/libs/ || true
+        mv usuarios-servicio/build/libs/*.jar usuarios-servicio/build/libs/ || true
+        mv asignaturas-servicio/build/libs/*.jar asignaturas-servicio/build/libs/ || true
+        mv matriculas-servicio/build/libs/*.jar matriculas-servicio/build/libs/ || true
+        
+        # Verificar que los archivos existen
+        ls -la */build/libs/ || true
       
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
