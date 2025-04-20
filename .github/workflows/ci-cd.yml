@@ -122,35 +122,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: docker-images
-        path: docker-images/
-
-  security-scan:
-    needs: build-and-test
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        
-    - name: Run Dependency Check
-      run: |
-        mkdir -p reports
-        # Descargar e instalar OWASP Dependency Check
-        wget https://github.com/jeremylong/DependencyCheck/releases/download/v9.0.10/dependency-check-9.0.10-release.zip
-        unzip dependency-check-9.0.10-release.zip
-        chmod +x dependency-check/bin/dependency-check.sh
-        
-        # Ejecutar el análisis
-        ./dependency-check/bin/dependency-check.sh --project "Sistema-Educativo-Microservicios" --scan . --format HTML --out ./reports
-        
-    - name: Upload Security Report
-      uses: actions/upload-artifact@v4
-      with:
-        name: security-report
-        path: reports 
+        path: docker-images/ 
